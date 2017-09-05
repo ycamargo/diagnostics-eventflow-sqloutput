@@ -1,0 +1,71 @@
+{
+  "inputs": [
+    {
+      "type": "Microsoft.Extensions.Logging"
+    }
+  ],
+  "filters": [],
+  "outputs": [
+    {
+      "type": "StdOutput"
+    },
+    {
+      "type": "ApplicationInsights",
+      // insert a valid instrumentationKey.
+      "instrumentationKey": "00000000-0000-0000-0000-000000000000",
+      // Output only filter
+      "filters": [
+        {
+          "type": "drop",
+          "include": "Level == Verbose"
+        }
+      ]
+    },
+    {
+      "type": "SqlTableOutput",
+
+      "connectionStringName": "myApplicationConnectionStr",
+      "logTableName": "ApplicationEvents",
+
+      // IDENTITY columns MUST BE left out of this configuration
+      "sqlColumnTypes:EventDate": "DateTime",
+      "sqlColumnTypes:ProcessName": "NVarChar:255",
+      "sqlColumnTypes:Provider": "NVarChar:255",
+      "sqlColumnTypes:EventId": "Int",
+      "sqlColumnTypes:Level": "NVarChar:20",
+      "sqlColumnTypes:ExceptionData": "NVarChar:4000",
+      "sqlColumnTypes:LogMessage": "NVarChar:4000",
+
+      "columnMappings:EventDate": "LogDate",
+      "columnMappings:Provider": "LoggerClassName",
+      "columnMappings:Level": "Level",
+      "columnMappings:ExceptionData": "ExceptionDescription",
+      "columnMappings:LogMessage": "LogMessage",
+
+      "customColumnMappings:ProcessName": "ProcessID",
+      "customColumnMappings:EventId": "EventId"
+    }
+  ],
+  "schemaVersion": "2016-08-11",
+  "settings": {
+    "pipelineBufferSize": "1000",
+    "maxEventBatchSize": "50",
+    "maxBatchDelayMsec": "500",
+    "maxConcurrency": "10",
+    "pipelineCompletionTimeoutMsec": "20000"
+  },
+  "healthReporter": {
+    "type": "CsvHealthReporter",
+    "logFileFolder": ".",
+    "logFilePrefix": "EventFlow_HealthReport",
+    "minReportLevel": "Message", // Message = Verbose, Warning, Error - default is Warning
+    "throttlingPeriodMsec": "1000"
+  },
+  "extensions": [
+    {
+      "category": "outputFactory",
+      "type": "SqlTableOutput",
+      "qualifiedTypeName": "Microsoft.Diagnostics.EventFlow.Outputs.SqlTableOutputFactory, Microsoft.Diagnostics.EventFlow.Outputs.SqlTable"
+    }
+  ]
+}
