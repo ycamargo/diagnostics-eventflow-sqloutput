@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package  xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Diagnostics.EventFlow.Outputs.SqlTable</id>
+    <version>1.0.0</version>
+    <authors>Yuri Camargo</authors>
+    <owners>Yuri Camargo</owners>
+    <projectUrl>https://github.com/ycamargo/diagnostics-eventflow-sqloutput</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <summary>Microsoft Diagnostic EventFlow SqlTable Output</summary>
+    <description>Implementation of a Custom Output for Microsoft.Diagnostics.EventFlow to write log events to a Sql Server table</description>
+    <releaseNotes>Initial version</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Microsoft, Diagnostics, EventFlow, Log, Event, Database, Table, Output</tags>
+    <licenseUrl>https://github.com/ycamargo/diagnostics-eventflow-sqloutput/blob/master/LICENSE</licenseUrl>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5.1">
+        <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
+      </group>
+      <group targetFramework=".NETFramework4.6">
+        <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
+      </group>
+      <group targetFramework=".NETFramework4.7">
+        <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
+      </group>
+      <group targetFramework=".NETStandard1.6">
+        <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.dll" target="lib" />
+    <file src="bin\Release\Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.pdb" target="lib" />
+  </files>
+</package>
