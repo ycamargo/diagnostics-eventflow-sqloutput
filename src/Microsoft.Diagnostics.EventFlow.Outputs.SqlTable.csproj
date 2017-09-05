@@ -5,7 +5,7 @@
     <ProjectGuid>{65CF68C7-91D0-473B-871D-0E8FA9615198}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>ClassLibrary</AssemblyName>
+    <AssemblyName>Microsoft.Diagnostics.EventFlow.Outputs.SqlTable</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -30,7 +30,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>Microsoft.Diagnostics.EventFlow.Outputs.SqlTable</RootNamespace>
+    <RootNamespace>Microsoft.Diagnostics.EventFlow.Outputs</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="Configuration\SqlTableOutputConfiguration.cs" />
     <Compile Include="EventData\EventDataParsed.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlTableOutput.cs" />
     <Compile Include="SqlTableOutputFactory.cs" />
   </ItemGroup>
