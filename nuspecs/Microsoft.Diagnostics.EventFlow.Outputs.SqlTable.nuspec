@@ -17,19 +17,10 @@
       <group targetFramework=".NETFramework4.5.1">
         <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
       </group>
-      <group targetFramework=".NETFramework4.6">
-        <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
-      </group>
-      <group targetFramework=".NETFramework4.7">
-        <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
-      </group>
-      <group targetFramework=".NETStandard1.6">
-        <dependency id="Microsoft.Diagnostics.EventFlow.Core" version="[1.1.6, )" />
-      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.dll" target="lib" />
-    <file src="bin\Release\Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.pdb" target="lib" />
+    <file src="..\src\bin\Release\Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.dll" target="lib" />
+    <file src="..\src\bin\Release\Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.pdb" target="lib" />
   </files>
 </package>
