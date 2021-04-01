@@ -44,13 +44,10 @@ jobs:
     - name: Setup Sonar Scanner tool
       run: dotnet tool install --global dotnet-sonarscanner
 
-    - name: Restore dependencies
-      run: dotnet restore src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln
-
     - name: Build Project
       run: |
         dotnet sonarscanner begin /o:"ycamargo-personal-projects" /k:"ycamargo_diagnostics-eventflow-sqloutput" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose=true
-        dotnet build src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln --configuration Release --no-restore
+        dotnet build src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln --configuration Release
         dotnet sonarscanner end /d:sonar.verbose=true
       
 #    - name: Run Tests
