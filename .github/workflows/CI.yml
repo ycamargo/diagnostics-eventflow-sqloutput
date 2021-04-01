@@ -1,0 +1,76 @@
+name: CI
+
+# Controls when the action will run. 
+on:
+  pull_request:
+    branches: [ master ]
+    paths:
+    - 'src/**'
+
+  push:
+    branches: [ master ]
+    paths:
+    - 'src/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+      
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.4.3
+      with:
+        # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x). Early access versions can be specified in the form of e.g. 14-ea, 14.0.0-ea, or 14.0.0-ea.28
+        java-version: 11.x
+        
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        # SDK version to use. Examples: 2.2.104, 3.1, 3.1.x
+        dotnet-version: 3.1.x
+        
+    - name: Setup Sonar Scanner tool
+      run: dotnet tool install --global dotnet-sonarscanner
+
+    - name: Restore dependencies
+      run: dotnet restore src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln
+
+    - name: Build Project
+      run: |
+        dotnet sonarscanner begin /o:"ycamargo-personal-projects" /k:"ycamargo_diagnostics-eventflow-sqloutput" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose=true
+        dotnet build src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln --configuration Release --no-restore
+        dotnet sonarscanner end /d:sonar.verbose=true
+      
+#    - name: Run Tests
+#      run: dotnet test src/**/*Tests.csproj --settings $GITHUB_WORKSPACE/src/CodeCoverage.runsettings --collect:"XPlat Code Coverage"
+      
+#    - name: Install Test Report Tool
+#      run: dotnet tool install dotnet-reportgenerator-globaltool --tool-path .
+      
+#    - name: Create Test Report
+#      run: ./reportgenerator -reports:${{runner.temp}}/**/coverage.cobertura.xml -targetdir:$GITHUB_WORKSPACE/coverlet/reports -reporttypes:"Cobertura"
+      
+#    - name: Publish Test Report on Workflow
+#      uses: actions/upload-artifact@v1.0.0
+#      with:
+#        name: CoverageReport # Artifact name        
+#        path: $GITHUB_WORKSPACE/coverlet/reports/Cobertura.xml
+       
+#    - name: Nuget Pack
+#      run: dotnet pack --no-build --configuration Release src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.csproj --output .
+#      
+#    - name: PushNuget
+#      if: github.event_name == 'push' 
+#      run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.PUBLISH_TO_NUGET_ORG}} --skip-duplicate
