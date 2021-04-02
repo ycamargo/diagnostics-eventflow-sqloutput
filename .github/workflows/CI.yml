@@ -52,9 +52,10 @@ jobs:
 
     - name: Build Project
       run: |
-        dotnet sonarscanner begin /o:"ycamargo-personal-projects" /k:"ycamargo_diagnostics-eventflow-sqloutput" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose=true
+        set sonar.verbose=true
+        dotnet sonarscanner begin /o:"ycamargo-personal-projects" /k:"ycamargo_diagnostics-eventflow-sqloutput" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io"
         dotnet build src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln --configuration Release --no-restore
-        dotnet sonarscanner end /d:sonar.verbose=true
+        dotnet sonarscanner end
       
 #    - name: Run Tests
 #      run: dotnet test src/**/*Tests.csproj --settings $GITHUB_WORKSPACE/src/CodeCoverage.runsettings --collect:"XPlat Code Coverage"
