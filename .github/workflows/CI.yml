@@ -28,7 +28,10 @@ jobs:
     
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
-      
+    
+    - name: Setup NuGet.exe for use with actions
+      uses: NuGet/setup-nuget@v1.0.5
+
     - name: Setup Java JDK
       uses: actions/setup-java@v1.4.3
       with:
@@ -43,11 +46,14 @@ jobs:
         
     - name: Setup Sonar Scanner tool
       run: dotnet tool install --global dotnet-sonarscanner
+      
+    - name: Restore dependencies
+      run: nuget restore src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln
 
     - name: Build Project
       run: |
         dotnet sonarscanner begin /o:"ycamargo-personal-projects" /k:"ycamargo_diagnostics-eventflow-sqloutput" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose=true
-        dotnet build src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln --configuration Release
+        dotnet build src/Microsoft.Diagnostics.EventFlow.Outputs.SqlTable.sln --configuration Release --no-restore
         dotnet sonarscanner end /d:sonar.verbose=true
       
 #    - name: Run Tests
